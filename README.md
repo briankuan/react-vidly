@@ -1,2 +1,2 @@
-# react-components
+# react-vidly
 Created with CodeSandbox
