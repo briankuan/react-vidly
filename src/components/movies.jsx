@@ -13,7 +13,6 @@ class Movies extends Component {
   };
 
   handleLike = movie => {
-    console.log('Cliked', movie);
     const movies = [...this.state.movies];
     const index = movies.indexOf(movie);
     movies[index] = { ...movie };
