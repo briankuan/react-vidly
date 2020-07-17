@@ -9,7 +9,6 @@ const Pagination = props => {
   if (pagesCount === 1) return null;
 
   const pages = _.range(1, pagesCount + 1);
-  let classes = 'page-item';
 
   return (
     <ul className="pagination">
