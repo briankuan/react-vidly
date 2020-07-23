@@ -9,23 +9,27 @@ class LoginForm extends Component {
   };
 
   schema = {
-    username: Joi.string().required(),
-    password: Joi.string().required()
+    username: Joi.string()
+      .required()
+      .label('Username'),
+    password: Joi.string()
+      .required()
+      .label('Password')
   };
 
   validate = () => {
-    const result = Joi.object(this.schema).validate(this.state.account, {
+    const options = {
       abortEarly: false
-    });
-    console.log(result);
+    };
+    const { error } = Joi.object(this.schema).validate(
+      this.state.account,
+      options
+    );
+    if (!error) return null;
 
     const errors = {};
-    const { account } = this.state;
-    if (account.username.trim() === '')
-      errors.username = 'Username is required.';
-    if (account.password.trim() === '')
-      errors.password = 'Password is required.';
-    return Object.keys(errors) === 0 ? {} : errors;
+    for (let item of error.details) errors[item.path[0]] = item.message;
+    return errors;
   };
 
   handleSubmit = e => {
@@ -33,7 +37,7 @@ class LoginForm extends Component {
 
     const errors = this.validate();
     console.log(errors);
-    this.setState({ errors });
+    this.setState({ errors: errors || {} });
     if (errors) return;
 
     console.log('submitted');
